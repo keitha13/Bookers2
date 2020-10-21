@@ -1,0 +1,100 @@
+
+<div class="body">
+  <div class="container">
+
+    <!--フラッシュ-->
+    <% if flash[:notice] %>
+      <p id="notice">
+        <%= notice %>
+      </p>
+    <% end %>
+
+    <!--エラーメッセージ-->
+    <% if @book.errors.any? %>
+     <div id="error_explanation">
+       <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+       <ul>
+         <% @book.errors.full_messages.each do |message| %>
+           <li><%= message %></li>
+         <% end %>
+       </ul>
+     </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-xs-3">
+        <h2>User info</h2>
+        <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpg', fallback: "no_image.jpg", style: "width: 100px; height: 100px;" %>
+        <table class="table">
+          <tbody>
+            <tr></tr>
+            <tr>
+              <th>name</th>
+              <th><%= @user.name %></th>
+            </tr>
+            <tr>
+              <th>introduction</th>
+              <th><%= @user.introduction %></th>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <% if @user == current_user %>
+            <%= link_to "", edit_user_path(@user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
+          <% else %>
+            <%= link_to "", user_path(@user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
+          <% end %>
+        </div>
+
+        <h2>New book</h2>
+        <%= form_with model: @book_new, local:true do |f| %>
+          <div class="field row">
+            <label for="book_title">Title</label>
+            <br>
+            <%= f.text_field :title, class: "col-xs-12" %>
+          </div>
+          <div class="field row">
+            <label for="book_opinion">Opinion</label>
+            <br>
+            <%= f.text_area :body, class: "col-xs-12" %>
+          </div>
+          <div class="actions row">
+            <%= f.submit 'Create Book', class: "col-xs-12 btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-xs-9">
+        <h2>Book detail</h2>
+        <table class="table table-hover table-inverse">
+          <tbody>
+            <tr>
+              <td>
+                <%= link_to (attachment_image_tag @book.user, :profile_image, format: 'jpg', fallback: "no_image.jpg", style: "width: 40px; height: 40px;"), user_path(@book.user) %>
+                <br>
+                <%= link_to "#{@user.name}", user_path(@user.id) %>
+              </td>
+              <td>
+                <%= @book.title %>
+              </td>
+              <td>
+                <%= @book.body %>
+              </td>
+              <td>
+                <% if @book.user == current_user %>
+                  <%= link_to "Edit", "/books/#{@book.id}/edit", class: "btn-sm btn-success" %>
+                <% end %>
+              </td>
+              <td>
+                <% if @book.user == current_user %>
+                  <%= link_to "Destroy", book_path(@book.id), method: :delete, data: {confirm: "本当に消しますか？"}, class: "btn-sm btn-danger" %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
