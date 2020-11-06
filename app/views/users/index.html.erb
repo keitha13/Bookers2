@@ -3,25 +3,25 @@
     <div class="row">
       <div class="col-xs-3">
         <h2>User info</h2>
-        <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpg', fallback: "no_image.jpg", style: "width: 100px; height: 100px;" %>
+        <%= attachment_image_tag @user_find, :profile_image, :fill, 100, 100, format: 'jpg', fallback: "no_image.jpg", style: "width: 100px; height: 100px;" %>
         <table class="table">
           <tbody>
             <tr></tr>
             <tr>
               <th>name</th>
-              <th><%= current_user.name %></th>
+              <th><%= @user.name %></th>
             </tr>
             <tr>
               <th>introduction</th>
-              <th><%= current_user.introduction %></th>
+              <th><%= @user.introduction %></th>
             </tr>
             <tr>
               <th>follows</th>
-              <th><%= link_to current_user.followings.count, follows_user_path %></th>
+              <th><%= link_to @user.followings.count, follows_user_path(@user.id) %></th>
             </tr>
             <tr>
               <th>followers</th>
-              <th><%= link_to current_user.followers.count, followers_user_path %></th>
+              <th><%= link_to @user.followers.count, followers_user_path(@user.id) %></th>
             </tr>
           </tbody>
         </table>

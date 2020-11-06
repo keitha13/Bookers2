@@ -1,9 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
 
-  def new
-  end
-
   def index
     @book = Book.new
     @user = current_user
@@ -39,13 +36,11 @@ class UsersController < ApplicationController
   def follows
     user = User.find(params[:id])
     @users = user.followings
-    current_user = current_user
   end
 
   def followers
     user = User.find(params[:id])
     @users = user.followers
-    current_user = current_user
   end
 
 
