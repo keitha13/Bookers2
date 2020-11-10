@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'search/search'
   get 'relationships/create'
   get 'relationships/destroy'
   root 'home#top'
@@ -9,6 +8,7 @@ Rails.application.routes.draw do
   resources :books do
     resource :favorites, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
+    get :search, on: :collection 
   end
 
   delete "books/:id" => "books#destroy"
@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
 
+
   resources :top
-  # post "books/:id" => "books#show"
   get "home/about" => "home#show"
 end

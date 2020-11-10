@@ -90,18 +90,8 @@
               <td>
                 <%= book.body %>
               </td>
-              <td>
-                <% if book.favorited_by?(current_user) %>
-                  <%= link_to book_favorites_path(book.id), method: :delete do %>
-                    <i class="fas fa-heart" aria-hidden="true"></i>
-                  <% end %>
-                  <%= book.favorites.count %>
-                <% else %>
-                 <%= link_to book_favorites_path(book.id), method: :post do %>
-                    <i class="far fa-heart" aria-hidden="true"></i>
-                  <% end %>
-                  <%= book.favorites.count %>
-                <% end %>
+              <td id="favorite-<%= book.id %>" >
+                <%= render partial: "favorites/favorites", locals: {book: book} %>
               </td>
               <td>
                 コメント数：<%= book.book_comments.count %>
